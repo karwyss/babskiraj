@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://babskiraj.pl/sitemap.xml
+
+# Babski Raj – Salon stylizacji paznokci Kraków
+# Grzegorzecka 33/LU, 31-532 Kraków
