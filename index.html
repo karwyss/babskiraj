@@ -109,8 +109,8 @@
     body { font-family: 'Jost', sans-serif; color: var(--text-dark); background: #fff; overflow-x: hidden; }
 
     /* ─── NAV ─── */
-    nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 1.2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; transition: all 0.5s ease; }
-    nav.scrolled { background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); box-shadow: 0 1px 30px rgba(0,0,0,0.08); padding: 0.8rem 2.5rem; }
+    nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 1.2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; transition: all 0.5s ease; background: #fff; box-shadow: 0 1px 30px rgba(0,0,0,0.05); }
+    /* nav.scrolled { background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); box-shadow: 0 1px 30px rgba(0,0,0,0.08); padding: 0.8rem 2.5rem; } */
     .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; letter-spacing: 0.08em; color: var(--text-dark); text-decoration: none; }
     .nav-logo span { color: var(--gold); }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
@@ -354,7 +354,23 @@
       .services-grid { grid-template-columns: 1fr; }
       .about-features { grid-template-columns: 1fr; }
       .review-card { flex: 0 0 300px; }
-    }
+      #hero { min-height: auto; height: auto;  padding: 120px 0 60px;  position: relative; }
+  .hero-content { padding: 0 1.5rem;  max-width: 100%;  position: relative; z-index: 10; background: rgba(255,255,255,0.85); backdrop-filter: blur(5px); border-radius: 20px; padding: 2rem 1.5rem; margin: 0 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+  .hero-image-col { width: 100%;  position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.4; z-index: 1; }
+  .hero-image-col::before { display: none; }
+  .hero-h1 { font-size: 2.8rem; }
+  .hero-sub { font-size: 1rem; color: var(--text-dark); text-shadow: none;}
+  .hero-buttons, .hero-actions { justify-content: center; }
+  .hero-eyebrow span { color: var(--gold); }
+}
+@media (max-width: 480px) {
+  .hero-content { padding: 1.5rem 1rem; margin: 0 1rem; }
+  .hero-h1 { font-size: 2.2rem; }
+  .hero-sub { font-size: 0.9rem; line-height: 1.6; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .btn-primary { width: 100%; justify-content: center; }
+  .hero-rating { justify-content: center; }
+}
   </style>
 </head>
 <body>
