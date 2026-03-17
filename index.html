@@ -120,11 +120,21 @@
     .nav-cta:hover { background: var(--gold); color: #111; border-color: var(--gold); }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
     .hamburger span { width: 24px; height: 1.5px; background: var(--text-dark); transition: all 0.3s; }
-    .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #0a0a0a; z-index: 99; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; color: #fff; text-decoration: none; transition: color 0.3s; }
-    .mobile-menu a:hover { color: var(--gold); }
-    .mobile-close { position: absolute; top: 1.5rem; right: 2rem; font-size: 2rem; cursor: pointer; color: #fff; }
+    /* Overlay backdrop */
+    .mobile-menu-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 98; backdrop-filter: blur(2px); }
+    .mobile-menu-backdrop.open { display: block; }
+    /* Slide-in panel from right */
+    .mobile-menu { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 0; position: fixed; top: 0; right: 0; bottom: 0; width: min(80vw, 300px); background: #0f0f0f; z-index: 99; padding: 5rem 2.5rem 3rem; transform: translateX(100%); transition: transform 0.38s cubic-bezier(0.4,0,0.2,1); box-shadow: -8px 0 40px rgba(0,0,0,0.35); }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.25s, padding-left 0.25s; padding: 0.75rem 0; width: 100%; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .mobile-menu a:last-child { border-bottom: none; color: var(--gold); }
+    .mobile-menu a:hover { color: var(--gold); padding-left: 0.4rem; }
+    /* Hamburger → X animation */
+    .hamburger span { transform-origin: center; }
+    .hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .mobile-close { display: none; }
 
     /* ─── HERO ─── */
     #hero { position: relative; height: 100vh; min-height: 700px; display: flex; align-items: center; overflow: hidden; }
@@ -423,15 +433,17 @@
 </head>
 <body>
 
+<!-- Mobile Menu Backdrop -->
+<div class="mobile-menu-backdrop" id="mobileBackdrop"></div>
+
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
-  <span class="mobile-close" id="mobileClose">✕</span>
   <a href="#oferta" onclick="closeMobile()">Oferta</a>
   <a href="#galeria" onclick="closeMobile()">Galeria</a>
   <a href="#opinie" onclick="closeMobile()">Opinie</a>
   <a href="#onas" onclick="closeMobile()">O nas</a>
   <a href="#kontakt" onclick="closeMobile()">Kontakt</a>
-  <a href="https://booksy.com" target="_blank" style="color: var(--gold);">Umów wizytę</a>
+  <a href="https://booksy.com" target="_blank" onclick="closeMobile()">Umów wizytę →</a>
 </div>
 
 <!-- NAV -->
@@ -1086,11 +1098,26 @@ window.addEventListener('scroll', () => {
 });
 
 // ─── MOBILE MENU ───
-document.getElementById('hamburger').addEventListener('click', () => {
-  document.getElementById('mobileMenu').classList.add('open');
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileBackdrop = document.getElementById('mobileBackdrop');
+
+function openMobile() {
+  mobileMenu.classList.add('open');
+  mobileBackdrop.classList.add('open');
+  hamburger.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeMobile() {
+  mobileMenu.classList.remove('open');
+  mobileBackdrop.classList.remove('open');
+  hamburger.classList.remove('active');
+  document.body.style.overflow = '';
+}
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.contains('open') ? closeMobile() : openMobile();
 });
-document.getElementById('mobileClose').addEventListener('click', closeMobile);
-function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+mobileBackdrop.addEventListener('click', closeMobile);
 
 // ─── REVEAL ON SCROLL ───
 const reveals = document.querySelectorAll('.reveal');
